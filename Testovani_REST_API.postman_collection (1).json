@@ -1,0 +1,273 @@
+{
+  "info": {
+    "_postman_id": "b1d0f532-5d77-4c46-a937-restapi-engeto-2026",
+    "name": "Testovani_REST_API_ENGETO",
+    "description": "Sanitizovana Postman collection k projektu. Token a prihlasovaci udaje jsou jen promenne a nejsou soucasti souboru.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://test-app.engeto.cz"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "studentId",
+      "value": "249"
+    },
+    {
+      "key": "login",
+      "value": ""
+    },
+    {
+      "key": "password",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "01 Login - platne udaje",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/login",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"login\": \"{{login}}\",\n  \"password\": \"{{password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "02 POST - vytvoreni studenta",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Test\",\n  \"lastName\": \"Student\",\n  \"email\": \"student.test.20260817.1642@example.com\",\n  \"isEuCitizen\": true,\n  \"zipCode\": \"30100\",\n  \"numberOfFailedStudies\": 0\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "03 GET - student",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/students/{{studentId}}",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "04 PUT - aktualizace studenta",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/students/{{studentId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"TestUpdated\",\n  \"lastName\": \"Student\",\n  \"email\": \"student.test.20260817.1642@example.com\",\n  \"isEuCitizen\": true,\n  \"zipCode\": \"30100\",\n  \"numberOfFailedStudies\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "05 DELETE - student",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/students/{{studentId}}",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "06 GET bez tokenu",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/students/{{studentId}}"
+      }
+    },
+    {
+      "name": "07 GET s neplatnym tokenem",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/students/{{studentId}}",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "invalid-token",
+              "type": "string"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "08 POST - duplicitni email",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Test\",\n  \"lastName\": \"Student\",\n  \"email\": \"student.test.20260817.1642@example.com\",\n  \"isEuCitizen\": true,\n  \"zipCode\": \"30100\",\n  \"numberOfFailedStudies\": 0\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "09 POST bez emailu - pozorovani",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Test\",\n  \"lastName\": \"Validation\",\n  \"isEuCitizen\": true,\n  \"zipCode\": \"30100\",\n  \"numberOfFailedStudies\": 0\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
